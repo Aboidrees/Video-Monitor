@@ -3,7 +3,7 @@ import 'package:flutter_vlc_player/flutter_vlc_player.dart';
 import 'package:flutter/services.dart';
 
 
-const String streamLink = 'rtmp://192.168.1.148/live/stream';
+const String streamLink = 'http://192.168.1.148:8080/hls/stream.m3u8';
 
 void main() {
   runApp(const MainApp());
@@ -58,15 +58,14 @@ class VideoStreamPageState extends State<VideoStreamPage> {
 
   @override
   Widget build(BuildContext context) {
+  final size = MediaQuery.of(context).size;
+  var display = WidgetsBinding.instance.platformDispatcher.views.first.display;
+  print('${display.refreshRate} fps'); // 120 fps
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Live Stream'),
-      ),
       body: Center(
         child: VlcPlayer(
           controller: _vlcPlayerController,
-          aspectRatio: 16 / 9,
-
+          aspectRatio:  size.width/size.height ,
           placeholder: const Center(child: CircularProgressIndicator()),
         ),
       ),
